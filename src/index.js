@@ -1,23 +1,39 @@
 import './css/styles.css';
-import { fetchCountries } from './fetchCountries';
-import { getRefs } from './getRefs';
+import { fetchCountries } from './fetchCountries.js';
+import { getRefs } from './getRefs.js';
 import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const DEBOUNCE_DELAY = 300;
 
 const refs = getRefs();
 
-refs.searchCountryInput.addEventListener('input', debounce(searchCountry, DEBOUNCE_DELAY));
+refs.searchCountryInput.addEventListener('input', debounce(onInputCountry, DEBOUNCE_DELAY));
 
-function searchCountry(event) {
-    let country = refs.searchCountryInput.value;
+function onInputCountry(event) {
+    const country = event.target.value.trim();
+    // let country = refs.searchCountryInput.value;
 
-    return fetchCountries(country).then((data) => {
-        choseCountry(data)
-    }).catch().finally()
+    return fetchCountries(country)
+    .then((data) => {
+        searchCountry(data)
+    })
+    .catch((error) => {
+        Notify.failure('Oops, there is no country with that name')
+    });
 }
 
-function choseCountry(data) {
+function searchCountry(countryArray) {
+    if(countryArray.length === 1) {
+        return markupCountryInfo(countryArray)
+    };
+    if(countryArray.length >= 2 && countryArray.length <= 10) {
+        return markupCountriesList(countryArray)
+    };
+    return Notify.info('Too many matches found. Please enter a more specific name.')
+}
+
+function markupCountriesList(data) {
     const markup = data.map(element => {
         return `
             <li>
@@ -29,7 +45,7 @@ function choseCountry(data) {
           refs.countryList.innerHTML = markup;
 }
 
-function createCountryInfo(data) {
+function markupCountryInfo(data) {
     const markup = data.map(element => {
     return `
     <img src=${element.flags.svg} alt="${element.name.official}" width="40" height="20">
