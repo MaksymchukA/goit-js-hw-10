@@ -17,4 +17,44 @@ body {
   padding: 8px;
   max-width: 320px;
   margin-bottom: 16px;
+
+  border-color: greenyellow;
+  border-radius: 10px;
+  outline: none;
 }
+
+#search-box:focus {
+  border-color: aqua;
+}
+
+.country-list,
+.country-info,
+.country-flag,
+.country-name {
+  margin: 0;
+  padding: 0;
+}
+
+.country-flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.country-flag {
+  margin-right: 10px;
+}
+
+.country-name {
+  font-size: 18px;
+}
+
+.country-info {
+  font-size: 20px;
+}
+
+.country-name-info{
+  font-size: 24px;
+  margin: 0;
+}
+
