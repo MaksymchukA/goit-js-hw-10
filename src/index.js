@@ -23,18 +23,19 @@ function onInputCountry(event) {
   if (country) {
     return fetchCountries(country)
       .then(data => {
+        console.log(data);
         searchCountry(data);
       })
       .catch(error => {
         Notify.failure('Oops, there is no country with that name');
+        clearCounries();
       });
   }
-
-  refs.countryList.innerHTML = '';
-  refs.countryInfo.innerHTML = '';
 }
 
 function searchCountry(countryArray) {
+  clearCounries();
+
   if (countryArray.length === 1) {
     refs.countryList.innerHTML = '';
     return markupCountryInfo(countryArray);
@@ -46,6 +47,11 @@ function searchCountry(countryArray) {
   return Notify.info(
     'Too many matches found. Please enter a more specific name.'
   );
+}
+
+function clearCounries() {
+  refs.countryList.innerHTML = '';
+  refs.countryInfo.innerHTML = '';
 }
 
 function markupCountriesList(data) {
@@ -82,3 +88,18 @@ function markupCountryInfo(data) {
 
   refs.countryInfo.innerHTML = markup;
 }
+
+// function markupCountry(data) {
+//   const markup = data
+//     .map(element => {
+//       const elemLang = element.languages.map(lang => lang.name).join(', ');
+
+//       return `
+//         <p class="country-info">Languages: ${elemLang}</p>
+//         `;
+//     })
+//     .join('');
+//   console.log("🚀 ~ markupCountryInfo ~ markup", markup)
+
+//   refs.countryInfo.innerHTML = markup;
+// }
