@@ -31,6 +31,7 @@ function onInputCountry(event) {
         clearCounries();
       });
   }
+  clearCounries();
 }
 
 function searchCountry(countryArray) {
