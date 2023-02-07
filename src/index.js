@@ -90,17 +90,19 @@ function markupCountryInfo(data) {
   refs.countryInfo.innerHTML = markup;
 }
 
-// function markupCountry(data) {
-//   const markup = data
-//     .map(element => {
-//       const elemLang = element.languages.map(lang => lang.name).join(', ');
+// Список мов можна вивести таким чином:
+// якщо використовуєте версію API 2,
+// ...
+// <div>
+//   <p><b>Capital:</b> ${capital}</p>
+//   <p><b>Population:</b> ${population}</p>
+//   <p><b>Languages:</b> ${languages.map(language => language.name).join(', ')}</p>
+// </div>`;
 
-//       return `
-//         <p class="country-info">Languages: ${elemLang}</p>
-//         `;
-//     })
-//     .join('');
-//   console.log("🚀 ~ markupCountryInfo ~ markup", markup)
-
-//   refs.countryInfo.innerHTML = markup;
-// }
+// якщо використовувати API 3.1:
+// ...
+// <div>
+//   <p><b>Capital:</b> ${capital}</p>
+//   <p><b>Population:</b> ${population}</p>
+//   <p><b>Languages:</b> ${Object.values(languages).join(', ')}</p>
+// </div>`
